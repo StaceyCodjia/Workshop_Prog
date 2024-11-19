@@ -9,7 +9,7 @@ void keep_green_only(sil::Image& image)
     {
         image.pixel(x, y).r = 0.f; 
         image.pixel(x, y).b = 0.f;
-        // lkjdhsgfghjk
+        
     }
 }
 }
@@ -98,17 +98,18 @@ void bruite(sil::Image& image )
    }
 }
 
-// void rotation(sil::Image& image)
-// {
-//     int height = image.height();
-//     int width = image.width();
-//     sil::Image new_image{height, width};
-//     for(int x{0}; x < width; x++) {
-//         for(int y{0}; y < height; y++) {
-//          new_image.pixel(height - 1 - y, x) = image.pixel(x,y);
-//         }
-//     }  
-// }
+void rotation(sil::Image& image)
+{
+    int height = image.height();
+    int width = image.width();
+    sil::Image new_image{height, width};
+    for(int x{0}; x < width; x++) {
+        for(int y{0}; y < height; y++) {
+         new_image.pixel(height - 1 - y, x) = image.pixel(x,y);
+        }
+    }  
+    image = new_image;
+}
 
 void split(sil::Image& image)
 {
@@ -171,11 +172,11 @@ int main()
         image.save("output/bruite.png");
     }
 
-    // {
-    //     sil::Image image{"images/logo.png"}; 
-    //     sil::Image new_image = rotation(image); 
-    //     new_image.save("output/rotation.png");
-    // }
+    {
+        sil::Image image{"images/logo.png"}; 
+        rotation(image); 
+        image.save("output/rotation.png");
+    }
 
     {
         sil::Image image{"images/logo.png"}; 
