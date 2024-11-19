@@ -170,6 +170,30 @@ void luminosite_light(sil::Image& image)
     }
 }
 
+void disk(sil::Image& image)
+{
+    int width = image.width();
+    int height = image.height();
+
+    float centreX = width / 2.f;
+    float centreY = height / 2.f;
+
+    for (int x{0}; x < width; x++){
+    for (int y{0}; y < height; y++)
+    {
+        float dx = x - centreX;
+        float dy = y - centreY;
+        float distance = std::sqrt(dx * dx + dy * dy);
+
+        if (distance <= 150) {
+                image.pixel(x, y) = glm::vec3(1.0f, 1.0f, 1.0f); 
+            } else {
+                image.pixel(x, y) = glm::vec3(0.0f, 0.0f, 0.0f); 
+            }
+    }
+    }
+}
+
 int main()
 {
     {
@@ -236,5 +260,10 @@ int main()
         image.save("output/luminosite_light.png");
     }
 
-
+    {
+        sil::Image image{500, 500};
+        disk(image); 
+        image.save("output/disk.png");
+    }
+    
 }
