@@ -9,6 +9,7 @@ void keep_green_only(sil::Image& image)
     {
         image.pixel(x, y).r = 0.f; 
         image.pixel(x, y).b = 0.f;
+        // lkjdhsgfghjk
     }
 }
 }
