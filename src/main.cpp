@@ -113,14 +113,17 @@ void rotation(sil::Image& image)
 
 void split(sil::Image& image)
 {
+    int val = 20;
     int width = image.width();
     int height = image.height();
+
     sil::Image splitImg (width,height);
+
     for (int x{0}; x < width; x++){
     for (int y{0}; y < height; y++)
     {
-    glm::vec3 leftpix = (x > 0) ? image.pixel(x - 1, y) : image.pixel(x,y);
-    glm::vec3 rightpix = (x < width - 1) ? image.pixel(x + 1, y) : image.pixel(x,y);
+    glm::vec3 leftpix = (x >= val) ? image.pixel(x - val, y) : image.pixel(x,y);
+    glm::vec3 rightpix = (x < width - val) ? image.pixel(x + val, y) : image.pixel(x,y);
 
     glm::vec3 newcolor (rightpix.r, image.pixel(x,y).g, leftpix.b);
 
@@ -128,6 +131,11 @@ void split(sil::Image& image)
     }
     }
     image = splitImg;
+}
+
+void luminosite(sil::Image& image)
+{
+
 }
 
 int main()
@@ -182,5 +190,11 @@ int main()
         sil::Image image{"images/logo.png"}; 
         split(image); 
         image.save("output/split.png");
+    }
+
+    {
+        sil::Image image{"images/logo.png"}; 
+        luminosite(image); 
+        image.save("output/luminosite.png");
     }
 }
