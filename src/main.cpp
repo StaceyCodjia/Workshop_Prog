@@ -133,9 +133,41 @@ void split(sil::Image& image)
     image = splitImg;
 }
 
-void luminosite(sil::Image& image)
+void luminosite_dark(sil::Image& image)
 {
+    // float puissance = 2;
+    int width = image.width();
+    int height = image.height();
 
+    for (int x{0}; x < width; x++){
+    for (int y{0}; y < height; y++)
+    {
+        glm::vec3 newPixel(
+                std::pow(image.pixel(x,y).r, 2),
+                std::pow(image.pixel(x,y).g, 2),
+                std::pow(image.pixel(x,y).b, 2)
+        );
+        image.pixel(x,y) = newPixel;
+    }
+    }
+}
+
+void luminosite_light(sil::Image& image)
+{
+    int width = image.width();
+    int height = image.height();
+
+    for (int x{0}; x < width; x++){
+    for (int y{0}; y < height; y++)
+    {
+        glm::vec3 newPixel(
+                std::pow(image.pixel(x,y).r, 0.4),
+                std::pow(image.pixel(x,y).g, 0.4),
+                std::pow(image.pixel(x,y).b, 0.4)
+        );
+        image.pixel(x,y) = newPixel;
+    }
+    }
 }
 
 int main()
@@ -174,11 +206,11 @@ int main()
         image.save("output/mirror.png");
     }
 
-    {
-        sil::Image image{"images/logo.png"}; 
-        bruite(image); 
-        image.save("output/bruite.png");
-    }
+    // {
+    //     sil::Image image{"images/logo.png"}; 
+    //     bruite(image); 
+    //     image.save("output/bruite.png");
+    // }
 
     {
         sil::Image image{"images/logo.png"}; 
@@ -193,8 +225,16 @@ int main()
     }
 
     {
-        sil::Image image{"images/logo.png"}; 
-        luminosite(image); 
-        image.save("output/luminosite.png");
+        sil::Image image{"images/photo.jpg"}; 
+        luminosite_dark(image); 
+        image.save("output/luminosite_dark.png");
     }
+
+    {
+        sil::Image image{"images/photo.jpg"}; 
+        luminosite_light(image); 
+        image.save("output/luminosite_light.png");
+    }
+
+
 }
