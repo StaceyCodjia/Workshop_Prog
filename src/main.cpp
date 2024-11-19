@@ -194,16 +194,14 @@ void disk(sil::Image& image)
     }
 }
 
-void circle(sil::Image& image)
+void circle(sil::Image& image, float centreX, float centreY)
 {
     int width = image.width();
     int height = image.height();
 
-    float centreX = width / 2.f;
-    float centreY = height / 2.f;
 
     int rayonint = 100;
-    int rayonext = 110;
+    int rayonext = 105;
     for (int x{0}; x < width; x++){
     for (int y{0}; y < height; y++)
     {
@@ -212,6 +210,53 @@ void circle(sil::Image& image)
         float distance = std::sqrt(dx * dx + dy * dy);
 
         if (distance <= rayonext && distance >= rayonint) {
+                image.pixel(x, y) = glm::vec3(1.0f, 1.0f, 1.0f); 
+        }
+            
+    }
+    }
+}
+
+void disk_0(sil::Image& image)
+{
+    int width = image.width();
+    int height = image.height();
+
+    float centreX = 0;
+    float centreY = height / 2.f;
+
+    for (int x{0}; x < width; x++){
+    for (int y{0}; y < height; y++)
+    {
+        float dx = x - centreX;
+        float dy = y - centreY;
+        float distance = std::sqrt(dx * dx + dy * dy);
+
+        if (distance <= 150) {
+                image.pixel(x, y) = glm::vec3(1.0f, 1.0f, 1.0f); 
+            } else {
+                image.pixel(x, y) = glm::vec3(0.0f, 0.0f, 0.0f); 
+            }
+    }
+    }
+}
+
+void disk_1(sil::Image& image)
+{
+    int width = image.width();
+    int height = image.height();
+
+    float centreX = width;
+    float centreY = height / 2.f;
+
+    for (int x{0}; x < width; x++){
+    for (int y{0}; y < height; y++)
+    {
+        float dx = x - centreX;
+        float dy = y - centreY;
+        float distance = std::sqrt(dx * dx + dy * dy);
+
+        if (distance <= 150) {
                 image.pixel(x, y) = glm::vec3(1.0f, 1.0f, 1.0f); 
             } else {
                 image.pixel(x, y) = glm::vec3(0.0f, 0.0f, 0.0f); 
@@ -228,40 +273,13 @@ void rosace(sil::Image& image)
     float centreX = width / 2.f;
     float centreY = height / 2.f;
 
-    int rayonint = 100;
-    int rayonext = 110;
-    for (int x{0}; x < width; x++){
-    for (int y{0}; y < height; y++)
-    {
-        float dx = x - centreX;
-        float dy = y - centreY;
-        float distance = std::sqrt(dx * dx + dy * dy);
+    circle(image, centreX, centreY);
 
-        if (distance <= rayonext && distance >= rayonint) {
-                image.pixel(x, y) = glm::vec3(1.0f, 1.0f, 1.0f); 
-            } else {
-                image.pixel(x, y) = glm::vec3(0.0f, 0.0f, 0.0f); 
-            }
-    }
-    }
+    circle(image, centreX + 100, centreY);
 
-    float centreX = width / 4.f;
-    float centreY = height / 2.f;
-    for (int x{0}; x < width; x++){
-    for (int y{0}; y < height; y++)
-    {
-        float dx = x - centreX;
-        float dy = y - centreY;
-        float distance = std::sqrt(dx * dx + dy * dy);
 
-        if (distance <= rayonext && distance >= rayonint) {
-                image.pixel(x, y) = glm::vec3(1.0f, 1.0f, 1.0f); 
-            } else {
-                image.pixel(x, y) = glm::vec3(0.0f, 0.0f, 0.0f); 
-            }
-    }
-    }
 }
+
 int main()
 {
     {
@@ -335,9 +353,28 @@ int main()
     }
 
     {
+        
         sil::Image image{500, 500};
-        circle(image); 
+        circle(image, image.width()/2, image.height()/2); 
         image.save("output/circle.png");
+    }
+
+    {
+        sil::Image image{500, 500};
+        disk_0(image); 
+        image.save("output/disk_0.png");
+    }
+
+    {
+        sil::Image image{500, 500};
+        disk_1(image); 
+        image.save("output/disk_1.png");
+    }
+
+    {
+        sil::Image image{500, 500};
+        rosace(image); 
+        image.save("output/rosace.png");
     }
     
 }
