@@ -220,6 +220,48 @@ void circle(sil::Image& image)
     }
 }
 
+void rosace(sil::Image& image)
+{
+    int width = image.width();
+    int height = image.height();
+
+    float centreX = width / 2.f;
+    float centreY = height / 2.f;
+
+    int rayonint = 100;
+    int rayonext = 110;
+    for (int x{0}; x < width; x++){
+    for (int y{0}; y < height; y++)
+    {
+        float dx = x - centreX;
+        float dy = y - centreY;
+        float distance = std::sqrt(dx * dx + dy * dy);
+
+        if (distance <= rayonext && distance >= rayonint) {
+                image.pixel(x, y) = glm::vec3(1.0f, 1.0f, 1.0f); 
+            } else {
+                image.pixel(x, y) = glm::vec3(0.0f, 0.0f, 0.0f); 
+            }
+    }
+    }
+
+    float centreX = width / 4.f;
+    float centreY = height / 2.f;
+    for (int x{0}; x < width; x++){
+    for (int y{0}; y < height; y++)
+    {
+        float dx = x - centreX;
+        float dy = y - centreY;
+        float distance = std::sqrt(dx * dx + dy * dy);
+
+        if (distance <= rayonext && distance >= rayonint) {
+                image.pixel(x, y) = glm::vec3(1.0f, 1.0f, 1.0f); 
+            } else {
+                image.pixel(x, y) = glm::vec3(0.0f, 0.0f, 0.0f); 
+            }
+    }
+    }
+}
 int main()
 {
     {
