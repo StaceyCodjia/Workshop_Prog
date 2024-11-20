@@ -194,8 +194,7 @@ void disk(sil::Image& image)
     }
 }
 
-void circle(sil::Image& image, float centreX, float centreY,int rayonint = 100,
-    int rayonext = 105)
+void circle(sil::Image& image, float centreX, float centreY,int rayonint = 100,int rayonext = 105)
 {
     int width = image.width();
     int height = image.height();
@@ -290,6 +289,25 @@ void rosace(sil::Image& image)
 
 
 }
+
+
+// void mosaique(sil::Image& image)
+// {
+//     int blocksize = 10;
+//     int height = image.height();
+//     int width = image.width();
+//     sil::Image new_image{height, width};
+
+//     for (int y = 0; y < image.height(); y += blocksize) {
+//         for (int x = 0; x < image.width(); x += blocksize) {
+            
+//             int x_block = x % blocksize;
+//             int y_block = y % blocksize;
+//         }
+//     }
+
+//     image = new_image;
+// }
 
 int main()
 {
@@ -387,5 +405,12 @@ int main()
         rosace(image); 
         image.save("output/rosace.png");
     }
+
+    // {
+    //     sil::Image image{"images/logo.png"}; 
+    //     mosaique(image); 
+    //     image.save("output/mosaique.png");
+    // }
+
     
 }
