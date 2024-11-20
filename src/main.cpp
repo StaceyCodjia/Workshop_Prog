@@ -194,14 +194,12 @@ void disk(sil::Image& image)
     }
 }
 
-void circle(sil::Image& image, float centreX, float centreY)
+void circle(sil::Image& image, float centreX, float centreY,int rayonint = 100,
+    int rayonext = 105)
 {
     int width = image.width();
     int height = image.height();
 
-
-    int rayonint = 100;
-    int rayonext = 105;
     for (int x{0}; x < width; x++){
     for (int y{0}; y < height; y++)
     {
@@ -215,6 +213,8 @@ void circle(sil::Image& image, float centreX, float centreY)
             
     }
     }
+
+    
 }
 
 void disk_0(sil::Image& image)
@@ -269,13 +269,24 @@ void rosace(sil::Image& image)
 {
     int width = image.width();
     int height = image.height();
-
+    int rayonint = 100;
+    int rayonext = 105;
     float centreX = width / 2.f;
     float centreY = height / 2.f;
 
     circle(image, centreX, centreY);
 
-    circle(image, centreX + 100, centreY);
+    float offset = rayonext;
+
+    for (int i = 0; i < 6; i++) {
+            float angle = i * M_PI / 3.0f; 
+            float newCenterX = centreX + offset * std::cos(angle);
+            float newCenterY = centreY + offset * std::sin(angle);
+
+            
+            circle(image, newCenterX, newCenterY);
+        }
+
 
 
 }
