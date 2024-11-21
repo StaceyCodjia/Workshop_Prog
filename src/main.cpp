@@ -291,23 +291,52 @@ void rosace(sil::Image& image)
 }
 
 
-// void mosaique(sil::Image& image)
-// {
-//     int blocksize = 10;
-//     int height = image.height();
-//     int width = image.width();
-//     sil::Image new_image{height, width};
+void mosaique(sil::Image& image)
+{
+    int new_width = image.width() * 5;
+    int new_height = image.height() * 5;
 
-//     for (int y = 0; y < image.height(); y += blocksize) {
-//         for (int x = 0; x < image.width(); x += blocksize) {
-            
-//             int x_block = x % blocksize;
-//             int y_block = y % blocksize;
-//         }
-//     }
+    sil::Image new_image{new_width, new_height};
 
-//     image = new_image;
-// }
+    for (int x = 0; x < new_width; ++x)
+    {
+        for (int y = 0; y < new_height; ++y)
+        {
+            int old_x = x % image.width();
+            int old_y = y % image.height();
+
+            new_image.pixel(x, y) = image.pixel(old_x, old_y);
+        }
+    }
+    image = new_image;
+}
+
+void mosaique_mirror(sil::Image&image){
+
+    sil::Image mosaique{image.width() * 5, image.height() * 5};
+
+    for(int x{0}; x < mosaique.width(); x++) 
+    {
+        for(int y{0}; y < mosaique.height(); y++)
+        {
+            int old_x {x % image.width()};
+            int old_y {y % image.height()};
+
+            bool mirrorX {(x / image.width()) % 2 == 1};
+            bool mirrorY {(y / image.height()) % 2 == 1}; 
+
+            if (mirrorX) {
+                old_x = image.width() - old_x - 1;
+            }
+            if (mirrorY) {
+                old_y = image.height() - old_y - 1;
+            }
+
+            mosaique.pixel(x, y) = image.pixel(old_x, old_y);
+        }
+    }
+    image = mosaique;
+}
 
 int main()
 {
@@ -406,11 +435,17 @@ int main()
         image.save("output/rosace.png");
     }
 
-    // {
-    //     sil::Image image{"images/logo.png"}; 
-    //     mosaique(image); 
-    //     image.save("output/mosaique.png");
-    // }
+    {
+        sil::Image image{"images/logo.png"}; 
+        mosaique(image); 
+        image.save("output/mosaique.png");
+    }
+
+    {
+        sil::Image image{"images/logo.png"}; 
+        mosaique_mirror(image); 
+        image.save("output/mosaique_mirror.png");
+    }
 
     
 }
