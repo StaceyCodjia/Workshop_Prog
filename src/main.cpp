@@ -1,5 +1,6 @@
 #include <sil/sil.hpp>
 #include "random.hpp"
+#include <algorithm>
 
 void keep_green_only(sil::Image& image)
 {
@@ -290,7 +291,6 @@ void rosace(sil::Image& image)
 
 }
 
-
 void mosaique(sil::Image& image)
 {
     int new_width = image.width() * 5;
@@ -360,6 +360,25 @@ void glitch(sil::Image& image)
                 std::swap(image.pixel(x1 + x,y1 + y), image.pixel(x2 + x,y2 + y));
             }
         }    
+    }
+}
+
+// Tri de pixels
+float brightness(glm::vec3 const&color){
+    float gray = color.r * 0.21 + color.g *0.72 + color.b *0.07;
+
+    return gray;
+}
+void pixel_sorting(sil::Image &image){
+    for (int i=0; (i + 70) < image.pixels().size(); i++)
+    {
+        if (random_int(0, 150) == 75){
+            std::sort(image.pixels().begin() + i, image.pixels().begin() + (i + 70), [](glm::vec3 const& color1, glm::vec3 const& color2)
+            {
+            return brightness(color1) > brightness(color2);
+            });
+            i = i + 70;
+        }
     }
 }
 
@@ -472,12 +491,16 @@ int main()
         image.save("output/mosaique_mirror.png");
     }
 
+    // {
+    //     sil::Image image{"images/logo.png"}; 
+    //     glitch(image); 
+    //     image.save("output/glitch.png");
+    // }
+
     {
         sil::Image image{"images/logo.png"}; 
-        glitch(image); 
-        image.save("output/glitch.png");
+        pixel_sorting(image); 
+        image.save("output/pixel_sorting.png");
     }
-
-
     
 }
