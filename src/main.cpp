@@ -311,7 +311,7 @@ void mosaique(sil::Image& image)
     image = new_image;
 }
 
-void mosaique_mirror(sil::Image&image){
+void mosaique_mirror(sil::Image& image){
 
     sil::Image mosaique{image.width() * 5, image.height() * 5};
 
@@ -336,6 +336,31 @@ void mosaique_mirror(sil::Image&image){
         }
     }
     image = mosaique;
+}
+
+void glitch(sil::Image& image)
+{
+    std::srand(std::time(0));
+
+    int width = image.width();
+    int height = image.height();
+
+    for (int i = 0; i < 50; ++i) {
+        
+        int rectWidth = std::rand() % (width / 10) + 1;  
+        int rectHeight = std::rand() % (height / 10) + 1; 
+
+        int x1 = std::rand() % (width - rectWidth);
+        int y1 = std::rand() % (height - rectHeight);
+        int x2 = std::rand() % (width - rectWidth);
+        int y2 = std::rand() % (height - rectHeight);
+
+        for (int y = 0; y < rectHeight; ++y) {
+            for (int x = 0; x < rectWidth; ++x) {
+                std::swap(image.pixel(x1 + x,y1 + y), image.pixel(x2 + x,y2 + y));
+            }
+        }    
+    }
 }
 
 int main()
@@ -446,6 +471,13 @@ int main()
         mosaique_mirror(image); 
         image.save("output/mosaique_mirror.png");
     }
+
+    {
+        sil::Image image{"images/logo.png"}; 
+        glitch(image); 
+        image.save("output/glitch.png");
+    }
+
 
     
 }
