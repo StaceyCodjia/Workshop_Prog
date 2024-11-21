@@ -1,6 +1,7 @@
 #include <sil/sil.hpp>
 #include "random.hpp"
 #include <algorithm>
+#include <iostream>
 
 void keep_green_only(sil::Image& image)
 {
@@ -369,7 +370,7 @@ float brightness(glm::vec3 const&color){
 
     return gray;
 }
-void pixel_sorting(sil::Image &image){
+void pixel_sorting(sil::Image& image){
     for (int i=0; (i + 70) < image.pixels().size(); i++)
     {
         if (random_int(0, 150) == 75){
@@ -380,6 +381,34 @@ void pixel_sorting(sil::Image &image){
             i = i + 70;
         }
     }
+}
+
+
+void normalizing_histogram(sil::Image& image){
+    
+    float darkest = 1.f;
+    float whitest = 0.f;
+    for (int x{0}; x < image.width(); x++) {
+        for (int y{0}; y < image.height(); y++) {
+
+            glm::vec3 &pixel = image.pixel(x, y);
+            float lum = brightness(pixel);
+            if(lum < darkest){
+                // si lum est + sombre que darkest, alors on remplace darkesst par lum
+                darkest = lum;
+            }
+            
+            else if (lum > whitest){
+                whitest = lum;
+            }
+
+            float normalizedLum = (lum - darkest) / (whitest - darkest);
+            pixel = pixel * (normalizedLum / lum);
+        }
+    }
+    std::cout << darkest << std::endl;
+    std::cout << whitest << std::endl;
+
 }
 
 int main()
@@ -497,10 +526,16 @@ int main()
     //     image.save("output/glitch.png");
     // }
 
-    {
-        sil::Image image{"images/logo.png"}; 
-        pixel_sorting(image); 
-        image.save("output/pixel_sorting.png");
-    }
+    // {
+    //     sil::Image image{"images/logo.png"}; 
+    //     pixel_sorting(image); 
+    //     image.save("output/pixel_sorting.png");
+    // }
     
+    {
+        sil::Image image{"images/photo_faible_contraste.jpg"}; 
+        normalizing_histogram(image); 
+        image.save("output/normalizing_histogram.png");
+    }
+
 }
