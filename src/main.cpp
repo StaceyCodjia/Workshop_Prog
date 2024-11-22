@@ -447,11 +447,11 @@ int main()
         image.save("output/mirror.png");
     }
 
-    // {
-    //     sil::Image image{"images/logo.png"}; 
-    //     bruite(image); 
-    //     image.save("output/bruite.png");
-    // }
+    {
+        sil::Image image{"images/logo.png"}; 
+        bruite(image); 
+        image.save("output/bruite.png");
+    }
 
     {
         sil::Image image{"images/logo.png"}; 
@@ -520,17 +520,17 @@ int main()
         image.save("output/mosaique_mirror.png");
     }
 
-    // {
-    //     sil::Image image{"images/logo.png"}; 
-    //     glitch(image); 
-    //     image.save("output/glitch.png");
-    // }
+    {
+        sil::Image image{"images/logo.png"}; 
+        glitch(image); 
+        image.save("output/glitch.png");
+    }
 
-    // {
-    //     sil::Image image{"images/logo.png"}; 
-    //     pixel_sorting(image); 
-    //     image.save("output/pixel_sorting.png");
-    // }
+    {
+        sil::Image image{"images/logo.png"}; 
+        pixel_sorting(image); 
+        image.save("output/pixel_sorting.png");
+    }
     
     {
         sil::Image image{"images/photo_faible_contraste.jpg"}; 
