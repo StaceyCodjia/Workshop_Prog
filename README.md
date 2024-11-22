@@ -11,6 +11,8 @@
   - [⭐⭐ Luminosité](#-luminosité)
   - [⭐⭐(⭐) Disque](#-disque)
   - [⭐ Cercle](#-cercle)
+  - [⭐⭐ Animation](#-animation)
+  - [⭐⭐⭐ Rosace](#-rosace)
 
 # 🐣 S1 | Prog: Workshop : Rapport
 
@@ -89,3 +91,19 @@ Attention ! Pensez à diviser les coordonnées par 2 pour centrer le disque.
 
 ## ⭐ Cercle
 ![](./output/circle.png)  
+
+## ⭐⭐ Animation
+![](./output/ezgif.com-animated-gif-maker.gif)  
+
+## ⭐⭐⭐ Rosace
+![](./output/rosace.png)  
+```cpp
+float offset = rayonext;
+    for (int i = 0; i < 6; i++) {
+            float angle = i * M_PI / 3.0f; 
+            float newCenterX = centreX + offset * std::cos(angle);
+            float newCenterY = centreY + offset * std::sin(angle);
+            circle(image, newCenterX, newCenterY);
+        }
+```
+Les centres des cercles formant un hexagone régulier, il faut les espacer d'un angle de 60°.
