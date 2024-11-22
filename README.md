@@ -13,6 +13,9 @@
   - [⭐ Cercle](#-cercle)
   - [⭐⭐ Animation](#-animation)
   - [⭐⭐⭐ Rosace](#-rosace)
+  - [⭐⭐ Mosaïque](#-mosaïque)
+  - [⭐⭐⭐⭐ Mosaïque miroir](#-mosaïque-miroir)
+  - [⭐⭐⭐ Glitch](#-glitch)
 
 # 🐣 S1 | Prog: Workshop : Rapport
 
@@ -106,4 +109,33 @@ float offset = rayonext;
             circle(image, newCenterX, newCenterY);
         }
 ```
-Les centres des cercles formant un hexagone régulier, il faut les espacer d'un angle de 60°.
+Les centres des cercles formant un hexagone régulier, il faut les espacer d'un angle de 60°tout en gardant le même rayon extérieur. 
+
+## ⭐⭐ Mosaïque
+![](./output/mosaique.png)  
+```cpp
+{
+int old_x = x % image.width();
+int old_y = y % image.height();
+new_image.pixel(x, y) = image.pixel(old_x, old_y);
+}
+```
+
+## ⭐⭐⭐⭐ Mosaïque miroir
+![](./output/mosaique_mirror.png)  
+```cpp
+{
+bool mirrorX {(x / image.width()) % 2 == 1};
+bool mirrorY {(y / image.height()) % 2 == 1}; 
+
+if (mirrorX) {
+    old_x = image.width() - old_x - 1;
+}
+if (mirrorY) {
+    old_y = image.height() - old_y - 1;
+}
+}
+```
+
+## ⭐⭐⭐ Glitch
+![](./output/glitch.png)  
