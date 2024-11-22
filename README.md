@@ -9,6 +9,8 @@
   - [⭐⭐ Rotation de 90°](#-rotation-de-90)
   - [⭐⭐ RGB split](#-rgb-split)
   - [⭐⭐ Luminosité](#-luminosité)
+  - [⭐⭐(⭐) Disque](#-disque)
+  - [⭐ Cercle](#-cercle)
 
 # 🐣 S1 | Prog: Workshop : Rapport
 
@@ -67,3 +69,23 @@ glm::vec3 rightpix = (x < width - val) ? image.pixel(x + val, y) : image.pixel(x
 
 ## ⭐⭐ Luminosité
 ![](./output/luminosite_dark.png)  ![](./output/luminosite_light.png)  
+Utilisation de `std::pow()`, en définissant une puissance :
+- p > 1 pour un effet plus sombre.
+- 0 < p > 1 pour un effet plus claire.
+
+## ⭐⭐(⭐) Disque
+![](./output/disk.png)  
+```cpp
+float dx = x - centreX;
+float dy = y - centreY;
+float distance = std::sqrt(dx * dx + dy * dy);
+        if (distance <= 150) {
+                image.pixel(x, y) = glm::vec3(1.0f, 1.0f, 1.0f); 
+            } else {
+                image.pixel(x, y) = glm::vec3(0.0f, 0.0f, 0.0f); 
+            }
+```
+Attention ! Pensez à diviser les coordonnées par 2 pour centrer le disque. 
+
+## ⭐ Cercle
+![](./output/circle.png)  
