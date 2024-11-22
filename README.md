@@ -4,7 +4,7 @@
 ![](./output/keep_green_only.png)
 
 ## ⭐ Échanger les canaux
-![](./output/echange.png) 
+![](./output/echange.png)  
 Pour ce exo j'ai utilisé la fonction `std::swap()` :
 ```cpp
 std::swap(image.pixel(x,y).r, image.pixel(x,y).b);
