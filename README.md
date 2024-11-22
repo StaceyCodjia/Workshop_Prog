@@ -16,6 +16,8 @@
   - [⭐⭐ Mosaïque](#-mosaïque)
   - [⭐⭐⭐⭐ Mosaïque miroir](#-mosaïque-miroir)
   - [⭐⭐⭐ Glitch](#-glitch)
+  - [⭐⭐⭐ Tri de pixels](#-tri-de-pixels)
+  - [⭐⭐⭐(⭐) Normalisation de l'histogramme](#-normalisation-de-lhistogramme)
 
 # 🐣 S1 | Prog: Workshop : Rapport
 
@@ -139,3 +141,31 @@ if (mirrorY) {
 
 ## ⭐⭐⭐ Glitch
 ![](./output/glitch.png)  
+Utilisation de `rand()` pour déterminer des positions de rectangle aléatoire. 
+
+## ⭐⭐⭐ Tri de pixels
+![](./output/pixel_sorting.png)  
+```cpp
+if (random_int(0, 150) == 75){
+std::sort(image.pixels().begin() + i, image.pixels().begin() + (i + 70), [](glm::vec3 const& color1, glm::vec3 const& color2)
+{
+return brightness(color1) > brightness(color2);
+});
+i = i + 70
+}
+```
+
+## ⭐⭐⭐(⭐) Normalisation de l'histogramme
+![](./output/normalizing_histogram.png)  
+```cpp
+{
+if(lum < darkest){
+    darkest = lum;
+}
+else if (lum > whitest){
+    whitest = lum;
+}
+float normalizedLum = (lum - darkest) / (whitest - darkest);
+pixel = pixel * (normalizedLum / lum);
+}
+```
